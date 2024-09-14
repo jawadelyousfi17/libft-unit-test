@@ -140,12 +140,12 @@ int main()
     }
     //clean
     index = 0;
-    // while(index < TESTS_NBR)
-    // {
-    //     if(tests[index].dest)
-    //         free(tests[index].dest);
-    //     index++;
-    // }
+    while(index < TESTS_NBR)
+    {
+        if(tests[index].dest)
+            free(tests[index].dest);
+        index++;
+    }
     if (sucess)
     {
         printf("All tests passed ✅\n");
