@@ -101,8 +101,9 @@ async function begin() {
         console.log("⚠️",args.f,".c")
         process.exit(1);
     }
+    const lbsdFlag = args.f == 'ft_strlcat' ? '-lbsd' : '';
     const parentPath = path.dirname(dirName);
-    const command = `gcc ${parentPath}/src/test_${args.f}.c ${currentDirectory}/${args.f}.c -fsanitize=address -o launch.out`
+    const command = `gcc ${parentPath}/src/test_${args.f}.c ${currentDirectory}/${args.f}.c ${lbsdFlag} -fsanitize=address -o launch.out`
     start(command);
 
     async function start(command) {
