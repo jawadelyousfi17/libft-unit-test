@@ -125,16 +125,13 @@ async function begin() {
     }
 
     async function launch(command, fname) {
-        const cursorToEnd = '\x1b[9999C'; // Moves cursor to end of line
         return new Promise((resolve, reject) => {
-            // Create a unique prefix for the current function name
             const prefix = `${blue}Running ${fname}`;
-            // Print the initial status message
             process.stdout.write(`${prefix}...`);
             exec(command, { timeout: 2500 }, (error, stdout, stderr) => {
                 process.stdout.write('\r');
+                console.log("first")
                 console.log(stdout);
-                // Move cursor to the start of the line
                 if (error && error.signal === 'SIGTERM') {
                     console.log(yellow, "\r🕒  Time out... The function took too long to execute.");
                     console.log(`${red}\r⚠️ ${fname} : Test failed${reset}`);
