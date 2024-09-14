@@ -140,8 +140,9 @@ async function begin() {
                 }
                 if (error) {
                     failed = true;
+                    console.log(error.message)
                     console.log(`${red}\r⚠️ ${fname} Test failed${reset}`);
-                    reject(error);  // Reject the promise on error
+                    reject(error);
                     return;
                 }
 
