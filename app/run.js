@@ -95,7 +95,14 @@ async function begin() {
         process.exit(1);
     }
 
-    const command = `gcc src/test_${args.f}.c ft_functions/${args.f}.c -fsanitize=address -o launch.out`
+    const err =  await checkFilesExist([''+args.f+'.c'])
+    if (err)
+    {
+        console.log("⚠️",args.f,".c")
+        process.exit(1);
+    }
+    const parentPath = path.dirname(dirName);
+    const command = `gcc ${parentPath}/src/test_${args.f}.c ${currentDirectory}/${args.f}.c -fsanitize=address -o launch.out`
     start(command);
 
     async function start(command) {
