@@ -22,7 +22,6 @@ let src_folder = args[0] ? args[0] : '';
 src_folder = !src_folder? src_folder : ensureTrailingSlash(src_folder);
 // Define the path to the src directory
 const srcPath = path.join(__dirname, src_folder);
-// Check if the directory exists
 
 const make_command = src_folder ? 'make -C ' + src_folder : 'make'
 const make_clean_command = src_folder ? 'make clean -C ' + src_folder : 'make clean'
