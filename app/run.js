@@ -14,7 +14,6 @@ const os = require('os');
 const currentDirectory = process.cwd();
 
 const dirName = __dirname
-console.log("first")
 
 
 let failed = false;
