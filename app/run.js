@@ -14,6 +14,7 @@ const os = require('os');
 const currentDirectory = process.cwd();
 
 const dirName = __dirname
+console.log("first")
 
 
 let failed = false;
@@ -130,7 +131,6 @@ async function begin() {
             process.stdout.write(`${prefix}...`);
             exec(command, { timeout: 2500 }, (error, stdout, stderr) => {
                 process.stdout.write('\r');
-                console.log("first")
                 console.log(stdout);
                 if (error && error.signal === 'SIGTERM') {
                     console.log(yellow, "\r🕒  Time out... The function took too long to execute.");
