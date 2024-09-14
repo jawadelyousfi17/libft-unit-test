@@ -224,11 +224,11 @@ tests[19].expected_size = strlcat(tests[19].expected, tests[19].source, tests[19
     }
     if (sucess)
     {
-        printf("\n\x1b[46m \r RESULT : All tests passed       ☑️ \n");
+        printf("\n\x1b[46m \r RESULT : All tests passed       ☑️ \x1b[0m\n");
          return 0;
     } else 
     {
-        printf("\n\x1b[41m \r RESULT :  FAILD ! %d / %d\n",passed_tests,TESTS_NBR);
+        printf("\n\x1b[41m \r RESULT :  FAILD ! %d / %d\x1b[0m\n",passed_tests,TESTS_NBR);
     }
     return 1;
 }
