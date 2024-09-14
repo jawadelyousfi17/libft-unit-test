@@ -10,7 +10,7 @@ typedef struct{
     char source[100];
     char dest[100];
     char expected[100];
-        char holder[100];
+    char holder[100];
     size_t size;
     size_t expected_size;
     size_t destsize;
