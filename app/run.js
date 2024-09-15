@@ -28,11 +28,11 @@ const cyan = '\x1b[36m';
 
 
 
-if (args.update) {
+if (args.u) {
     console.log(blue, "\rUpdating...")
     update_git((err) => process.exit(err));
 }
-else if (args.check) {
+else if (args.c) {
     console.log(blue, "\rChecking files...");
     checkFiles().then((err) => {
         if (!err) {
@@ -75,7 +75,7 @@ async function begin() {
         return err;
     }
 
-   
+
 
     //check arg
     if (!args.f) {
@@ -91,28 +91,60 @@ async function begin() {
         process.exit(1);
     }
 
-    if(!functionNames.includes(args.f))
-    {
-        console.log("⚠️ No test available for this function : ",args.f);
+    if (!functionNames.includes(args.f[0])) {
+        console.log("⚠️ No test available for this function : ", args.f[0]);
         process.exit(1);
+    }
+    const helperFunctionsArgs = args.l;
+    let helperFunctionsNames = '';
+    const functionsToCheck = [];
+    functionsToCheck.push(args.f[0] + '.c')
+    if (args.l) {
+        helperFunctionsArgs.forEach(fn => {
+            helperFunctionsNames += currentDirectory + '/' + fn + '.c '
+        });
+        args.l.forEach((fn, index) => {
+            args.l[index] = fn + '.c'
+            functionsToCheck.push(args.l[index])
+        })
     }
 
-    const err =  await checkFilesExist([''+args.f+'.c'])
-    if (err)
-    {
-        console.log("⚠️",args.f,".c")
+    const err = await checkFilesExist(functionsToCheck)
+    if (err) {
+        console.log("⚠️", args.f[0], ".c")
         process.exit(1);
     }
-    const lbsdFlag = args.f == 'ft_strlcat' ? '-lbsd' : '';
+    const lbsdFlag = args.f[0] == 'ft_strlcat' ? '-lbsd' : '';
     const parentPath = path.dirname(dirName);
-    const command = `gcc ${parentPath}/src/test_${args.f}.c ${currentDirectory}/${args.f}.c ${lbsdFlag} -fsanitize=address -o launch.out`
+    const command = `gcc ${parentPath}/src/test_${args.f[0]}.c ${currentDirectory}/${args.f[0]}.c ${helperFunctionsNames} ${lbsdFlag} -fsanitize=address -o launch.out`
     start(command);
 
     async function start(command) {
         exec(command, (error, stdout, stderr) => {
             if (error) {
-                console.log("⚠️ An error occurred:");
-                console.error(`Error executing command: ${error.message}`);
+                console.log("⚠️ Compilation error occurred:");
+                if (error.message.includes("undefined reference to")) {
+                    const regex = /undefined reference to [`'"]([^`'"]+)['"]/g;
+                    let match;
+                    const missingFunctions = [];
+                    while ((match = regex.exec(stderr)) !== null) {
+                    missingFunctions.push(match[1]);  
+                    }
+                    let missingFnames = '';
+                    if(missingFunctions)
+                    {
+                        missingFunctions.forEach(fn => {
+                            missingFnames += fn+' '
+                        })
+                    }
+                    console.log("Error: Undefined references to the following functions:");
+                    console.log(red,missingFnames,reset)
+                    console.log("Please include these functions in your C files.");
+                    console.log("Or use the '-l' flag to link the additional functions required.");
+                    console.log(`For example : ${cyan} libftu -f ${args.f[0]} ${yellow} -l ${missingFnames} ${reset}`);
+
+                } else 
+                    console.error(`Error executing command: ${error.message}`);
                 return;
             }
 
@@ -121,8 +153,8 @@ async function begin() {
                 console.error(`Command stderr: ${stderr}`);
                 return;
             }
-            let cmd = './testLaunch.out ' + args.f
-            runTests(args.f);
+            let cmd = './testLaunch.out ' + args.f[0]
+            runTests(args.f[0]);
         });
     }
 

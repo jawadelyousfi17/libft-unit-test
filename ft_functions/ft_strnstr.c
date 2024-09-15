@@ -1,6 +1,4 @@
 #include "libft.h"
-#include "ft_strlen.c"
-#include "ft_strncmp.c"
 
 char *ft_strnstr(const char *big, const char *little, size_t len)
 {

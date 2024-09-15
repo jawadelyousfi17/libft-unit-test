@@ -20,10 +20,32 @@ const parseArgs = (args) => {
   return flags;
 };
 
-const flags = parseArgs(args);
+const getArgs = (args) => {
+  let i = 0;
+  const result = {};
+  while (i < args.length) {
+      let arg = args[i];
+      if (arg.startsWith("-"))
+      {
+          arg = arg.slice(1);
+          result[arg] = [];
+          i++;
+          let j = i;
+          while (j < args.length && !args[j].startsWith("-") ) 
+          {
+              result[arg].push(args[j]);
+              j++;
+          }
+          i += (j -i -1)
+      }
+      i++;
+  }
+  return result
+}
+
+const flags = getArgs(args);
 
 const getParams = () => {
   return flags;
 }
-// {f : "value", s : "value" .. } 
 module.exports = { getParams }
