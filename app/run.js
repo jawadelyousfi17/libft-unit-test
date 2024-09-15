@@ -82,7 +82,6 @@ async function begin() {
         console.log(yellow, `\r❌ Error: Invalid args!${reset}
     Try this  intsted
     Valid : testf -f ft_strlen  [ or any function name ]
-    valid : testf -f all
     valid : testf -u  
     valid : testf -update
     valid : testf -check
@@ -90,118 +89,124 @@ async function begin() {
         `);
         process.exit(1);
     }
-
-    if (!functionNames.includes(args.f[0])) {
-        console.log("⚠️ No test available for this function : ", args.f[0]);
+    if (args.f.length > 1) {
+        console.log(yellow, `\r❌ too many arguments for -f${reset}`)
+        console.log(yellow, `\r❌ Error: Invalid args!${reset}
+    Try this  intsted
+    Valid : testf -f ft_strlen  [ or any function name ]
+        `);
         process.exit(1);
     }
-    const helperFunctionsArgs = args.l;
-    let helperFunctionsNames = '';
-    const functionsToCheck = [];
-    functionsToCheck.push(args.f[0] + '.c')
-    if (args.l) {
-        helperFunctionsArgs.forEach(fn => {
-            helperFunctionsNames += currentDirectory + '/' + fn + '.c '
-        });
-        args.l.forEach((fn, index) => {
-            args.l[index] = fn + '.c'
-            functionsToCheck.push(args.l[index])
-        })
-    }
+if (!functionNames.includes(args.f[0])) {
+    console.log("⚠️ No test available for this function : ", args.f[0]);
+    process.exit(1);
+}
+const helperFunctionsArgs = args.l;
+let helperFunctionsNames = '';
+const functionsToCheck = [];
+functionsToCheck.push(args.f[0] + '.c')
+if (args.l) {
+    helperFunctionsArgs.forEach(fn => {
+        helperFunctionsNames += currentDirectory + '/' + fn + '.c '
+    });
+    args.l.forEach((fn, index) => {
+        args.l[index] = fn + '.c'
+        functionsToCheck.push(args.l[index])
+    })
+}
 
-    const err = await checkFilesExist(functionsToCheck)
-    if (err) {
-        console.log("⚠️", args.f[0], ".c")
-        process.exit(1);
-    }
-    const lbsdFlag = args.f[0] == 'ft_strlcat' ? '-lbsd' : '';
-    const parentPath = path.dirname(dirName);
-    const command = `gcc ${parentPath}/src/test_${args.f[0]}.c ${currentDirectory}/${args.f[0]}.c ${helperFunctionsNames} ${lbsdFlag} -fsanitize=address -o launch.out`
-    start(command);
+const err = await checkFilesExist(functionsToCheck)
+if (err) {
+    console.log("⚠️", args.f[0], ".c")
+    process.exit(1);
+}
+const lbsdFlag = args.f[0] == 'ft_strlcat' ? '-lbsd' : '';
+const parentPath = path.dirname(dirName);
+const command = `gcc ${parentPath}/src/test_${args.f[0]}.c ${currentDirectory}/${args.f[0]}.c ${helperFunctionsNames} ${lbsdFlag} -fsanitize=address -o launch.out`
+start(command);
 
-    async function start(command) {
-        exec(command, (error, stdout, stderr) => {
+async function start(command) {
+    exec(command, (error, stdout, stderr) => {
+        if (error) {
+            console.log("⚠️ Compilation error occurred:");
+            if (error.message.includes("undefined reference to")) {
+                const regex = /undefined reference to [`'"]([^`'"]+)['"]/g;
+                let match;
+                const missingFunctions = [];
+                while ((match = regex.exec(stderr)) !== null) {
+                    missingFunctions.push(match[1]);
+                }
+                let missingFnames = '';
+                if (missingFunctions) {
+                    missingFunctions.forEach(fn => {
+                        missingFnames += fn + ' '
+                    })
+                }
+                console.log("Error: Undefined references to the following functions:");
+                console.log(red, missingFnames, reset)
+                console.log("Please include these functions in your C files.");
+                console.log("Or use the '-l' flag to link the additional functions required.");
+                console.log(`For example : ${cyan} libftu -f ${args.f[0]} ${yellow} -l ${missingFnames} ${reset}`);
+
+            } else
+                console.error(`Error executing command: ${error.message}`);
+            return;
+        }
+
+        if (stderr) {
+            console.log("⚠️ An error occurred:");
+            console.error(`Command stderr: ${stderr}`);
+            return;
+        }
+        let cmd = './testLaunch.out ' + args.f[0]
+        runTests(args.f[0]);
+    });
+}
+
+async function launch(command, fname) {
+    return new Promise((resolve, reject) => {
+        const prefix = `${blue}Running ${fname}`;
+        process.stdout.write(`${prefix}...`);
+        exec(command, { timeout: 2500 }, (error, stdout, stderr) => {
+            process.stdout.write('\r');
+            console.log(stdout);
+            if (error && error.signal === 'SIGTERM') {
+                console.log(yellow, "\r🕒  Time out... The function took too long to execute.");
+                console.log(`${red}\r⚠️ ${fname} : Test failed${reset}`);
+                failed = true;
+                resolve(true);
+                return;
+            }
             if (error) {
-                console.log("⚠️ Compilation error occurred:");
-                if (error.message.includes("undefined reference to")) {
-                    const regex = /undefined reference to [`'"]([^`'"]+)['"]/g;
-                    let match;
-                    const missingFunctions = [];
-                    while ((match = regex.exec(stderr)) !== null) {
-                    missingFunctions.push(match[1]);  
-                    }
-                    let missingFnames = '';
-                    if(missingFunctions)
-                    {
-                        missingFunctions.forEach(fn => {
-                            missingFnames += fn+' '
-                        })
-                    }
-                    console.log("Error: Undefined references to the following functions:");
-                    console.log(red,missingFnames,reset)
-                    console.log("Please include these functions in your C files.");
-                    console.log("Or use the '-l' flag to link the additional functions required.");
-                    console.log(`For example : ${cyan} libftu -f ${args.f[0]} ${yellow} -l ${missingFnames} ${reset}`);
-
-                } else 
-                    console.error(`Error executing command: ${error.message}`);
+                failed = true;
+                console.log(error.message)
+                console.log(`${red}\r⚠️ ${fname} Test failed${reset}`);
+                reject(error);
                 return;
             }
 
             if (stderr) {
-                console.log("⚠️ An error occurred:");
+                failed = true;
+                console.log("⚠️ Test failed");
                 console.error(`Command stderr: ${stderr}`);
+                reject(new Error(stderr));  // Reject the promise on stderr
                 return;
             }
-            let cmd = './testLaunch.out ' + args.f[0]
-            runTests(args.f[0]);
+
+            process.stdout.write(`${green}${bold}✓ ${fname} : Test passed${reset}                   \n`);
+            resolve(stdout);  // Resolve the promise on success
         });
-    }
+    });
+}
 
-    async function launch(command, fname) {
-        return new Promise((resolve, reject) => {
-            const prefix = `${blue}Running ${fname}`;
-            process.stdout.write(`${prefix}...`);
-            exec(command, { timeout: 2500 }, (error, stdout, stderr) => {
-                process.stdout.write('\r');
-                console.log(stdout);
-                if (error && error.signal === 'SIGTERM') {
-                    console.log(yellow, "\r🕒  Time out... The function took too long to execute.");
-                    console.log(`${red}\r⚠️ ${fname} : Test failed${reset}`);
-                    failed = true;
-                    resolve(true);
-                    return;
-                }
-                if (error) {
-                    failed = true;
-                    console.log(error.message)
-                    console.log(`${red}\r⚠️ ${fname} Test failed${reset}`);
-                    reject(error);
-                    return;
-                }
-
-                if (stderr) {
-                    failed = true;
-                    console.log("⚠️ Test failed");
-                    console.error(`Command stderr: ${stderr}`);
-                    reject(new Error(stderr));  // Reject the promise on stderr
-                    return;
-                }
-
-                process.stdout.write(`${green}${bold}✓ ${fname} : Test passed${reset}                   \n`);
-                resolve(stdout);  // Resolve the promise on success
-            });
-        });
-    }
-
-    async function runTests(fname) {
-        if (fname !== 'all' || !fname) {
-            try {
-                console.log("running")
-                await launch(`./launch.out`, fname);
-            } catch (error) {
-            }
+async function runTests(fname) {
+    if (fname !== 'all' || !fname) {
+        try {
+            console.log("running")
+            await launch(`./launch.out`, fname);
+        } catch (error) {
         }
     }
+}
 
 }
