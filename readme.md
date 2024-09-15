@@ -4,12 +4,15 @@ This Node.js script is designed to running tests, checking for required files, c
 
 ## Table of Contents
 
-- [Getting Started](#getting-started)
-- [Usage](#usage)
-- [Script Overview](#script-overview)
-- [Functions and Arguments](#functions-and-arguments)
-- [Error Handling](#error-handling)
-- [Examples](#examples)
+- [Testing Script](#testing-script)
+  - [Table of Contents](#table-of-contents)
+  - [Getting Started](#getting-started)
+  - [Script Overview](#script-overview)
+  - [Functions and Arguments](#functions-and-arguments)
+    - [Command-Line Arguments](#command-line-arguments)
+    - [Helper Functions](#helper-functions)
+  - [Error Handling](#error-handling)
+    - [Undefined Reference Errors](#undefined-reference-errors)
 
 ## Getting Started
 
