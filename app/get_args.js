@@ -28,6 +28,10 @@ const getArgs = (args) => {
       if (arg.startsWith("-"))
       {
           arg = arg.slice(1);
+          if (arg === 'update')
+              arg = 'u';
+          if(arg === 'check')
+              arg = 'c'
           result[arg] = [];
           i++;
           let j = i;
