@@ -12,7 +12,6 @@ typedef struct{
 
 #define TESTS_NBR 30
 
-
 int main() {
     test_val tests[TESTS_NBR];
 

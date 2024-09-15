@@ -49,7 +49,9 @@ async function begin() {
         "ft_atoi",
         "ft_strdup",
         "ft_strlcat",
-        "ft_strnstr"
+        "ft_strnstr",
+        "ft_itoa",
+        "ft_substr"
     ];
 
     function checkFileExists(filePath) {
