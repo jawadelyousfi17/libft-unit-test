@@ -3,6 +3,16 @@
 # Get the current directory where the script is located
 SCRIPT_DIR="$(dirname "$(realpath "$0")")"
 
+# Check if Node.js is installed
+if command -v node >/dev/null 2>&1; then
+    echo "Node.js is not installed."
+    echo "Please install Node.js before running this script."
+    echo "You can find installation instructions here: https://docs.npmjs.com/downloading-and-installing-node-js-and-npm"
+    exit 1
+else
+    echo "Node.js is installed."
+fi
+
 # Construct the full path to your Node.js script
 NODE_SCRIPT="$SCRIPT_DIR/app/run.js"
 
