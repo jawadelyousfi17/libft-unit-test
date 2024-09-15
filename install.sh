@@ -30,7 +30,7 @@ fi
 
 # Create a symbolic link in /usr/bin
 #echo -e "${CYAN}Creating a symbolic link in /usr/bin...${RESET}"
-sudo ln -s "$TARGET_DIR/$SCRIPT_NAME" /usr/bin/libftu1
+sudo ln -s "$TARGET_DIR/$SCRIPT_NAME" /usr/bin/libftu
 if [ $? -ne 0 ]; then
     echo -e "❌ ${RED}Failed to create a symbolic link.${RESET}" >&2
     exit 1
