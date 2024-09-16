@@ -80,7 +80,13 @@ This Node.js script is designed to run tests, check for required files, and comp
         ```bash
         libftu -update
         ```
+    - **Help:**
 
+        Help menu :
+
+        ```bash
+        libftu -h
+        ```
 ## Script Overview
 
 The script performs the following tasks:
