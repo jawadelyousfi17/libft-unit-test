@@ -51,7 +51,9 @@ async function begin() {
         "ft_strlcat",
         "ft_strnstr",
         "ft_itoa",
-        "ft_substr"
+        "ft_substr",
+        "ft_strjoin",
+        "ft_strtrim"
     ];
 
     function checkFileExists(filePath) {
@@ -137,8 +139,13 @@ async function start(command) {
                     missingFunctions.push(match[1]);
                 }
                 let missingFnames = '';
+                function removeDuplicates(arr) {
+                    return arr.filter((item,
+                        index) => arr.indexOf(item) === index);
+                }
                 if (missingFunctions) {
-                    missingFunctions.forEach(fn => {
+                    const missingFunctionsWithoutDuplicate = removeDuplicates(missingFunctions)
+                    missingFunctionsWithoutDuplicate.forEach(fn => {
                         missingFnames += fn + ' '
                     })
                 }
