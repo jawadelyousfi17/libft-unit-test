@@ -31,6 +31,30 @@ const cyan = '\x1b[36m';
 if (args.u) {
     console.log(blue, "\rUpdating...")
     update_git((err) => process.exit(err));
+} else if (args.h)
+{
+    console.log(`
+        Usage:
+          - libftu -f <fname>        : Test a specific function <fname>.
+          - libftu -f <fname> -l <required_function_names> : Test a function and include additional required functions.
+          - libftu -u                : Update the repository.
+          - libftu -update           : Update the repository (alternative flag).
+          - libftu -c                : Check if all required files exist.
+          - libftu -check            : Check if all required files exist (alternative flag).
+        
+        Examples:
+          - To test a function:
+            libftu -f ft_strlen
+        
+          - To test a function with dependencies:
+            libftu -f ft_strjoin -l ft_strlen ft_substr
+        
+          - To check if all files exist:
+            libftu -check
+        
+          - To update the repository:
+            libftu -update
+        `);
 }
 else if (args.c) {
     console.log(blue, "\rChecking files...");
