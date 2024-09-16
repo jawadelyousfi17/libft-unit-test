@@ -1,6 +1,6 @@
 # Testing Script
 
-This Node.js script is designed to running tests, checking for required files, compiling C code,
+This Node.js script is designed to run tests, check for required files, and compile C code.
 
 ## Table of Contents
 
@@ -25,11 +25,19 @@ This Node.js script is designed to running tests, checking for required files, c
 
 2. **Install Dependencies:**
 
-    Run the installation script to set up the environment:
+    Run the installation script based on your access:
 
-    ```bash
-    ./install.sh
-    ```
+    - **If you have root access**, run:
+
+      ```bash
+      ./install.sh
+      ```
+
+    - **If you don't have root access**, run:
+
+      ```bash
+      ./setup.sh
+      ```
 
 3. **Ensure Node.js and npm Are Installed:**
 
