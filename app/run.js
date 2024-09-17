@@ -72,7 +72,6 @@ async function begin() {
     draw_intro(yellow);
     process.stdout.write(`Checking for updates...\r`);
     const k = await isRepoUpToDate();
-    console.log(k)
     const functionNames = [
         "ft_atoi",
         "ft_strdup",

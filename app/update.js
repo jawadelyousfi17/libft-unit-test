@@ -50,9 +50,9 @@ const cyan = '\x1b[36m';
             }
             if (stderr) {
                 console.error(green,`\r✅ Updated `,reset);
-                reject(true)
+                resolve(true)
             }
-           resolve(stdout)
+           resolve(true)
         });
      })
  
