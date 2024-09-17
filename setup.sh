@@ -9,7 +9,7 @@ if [[ "$SHELL" == *"bash"* ]]; then
     #show message
     source ~/.bashrc
 elif [[ "$SHELL" == *"zsh"* ]]; then
-    echo "Using zsh"
+    echo "Using zsh "
     # Add alias to .zshrc
     echo "alias badt='~/libft-unit-test/run_test.sh'" >> ~/.zshrc
     # Reload .zshrc
