@@ -57,7 +57,7 @@ if (args.u) {
         `);
 }
 else if (args.c) {
-    console.log(blue, "\rChecking files...");
+    console.log(blue, "\rChecking files.....");
     checkFiles().then((err) => {
         if (!err) {
             console.log(green, '\r✅ All files exist', reset)
