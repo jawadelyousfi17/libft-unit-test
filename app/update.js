@@ -46,7 +46,7 @@ const cyan = '\x1b[36m';
              // Check the status to see if we're behind or ahead of the remote branch
              exec('git status -uno', (statusError, stdout) => {
                  if (statusError) {
-                     console.error('Error checking git status:', statusError);
+                     console.error('Error checking git status:');
                      reject(statusError)
                  }
                  // Parse the output of 'git status'
