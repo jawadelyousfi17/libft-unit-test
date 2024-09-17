@@ -5,7 +5,7 @@ const fs = require('fs');
 const path = require('path');
 const { isLibbsdInstalled, printInstallationInstructions, ensureTrailingSlash } = require('./check_libsd');
 const { getParams } = require("./get_args")
-const { update_git } = require("./update")
+const { update_git, isRepoUpToDate } = require("./update")
 const { draw_done, draw_intro } = require('./ascii_drawing')
 const { checkFiles } = require("./check_files")
 const os = require('os');
@@ -68,7 +68,11 @@ else if (args.c) {
 }
 
 async function begin() {
+
     draw_intro(yellow);
+    process.stdout.write(`Checking for updates...\r`);
+    await isRepoUpToDate();
+    process.stdout.write(`\r                        `);
     const functionNames = [
         "ft_atoi",
         "ft_strdup",
