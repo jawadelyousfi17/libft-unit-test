@@ -24,7 +24,7 @@ const cyan = '\x1b[36m';
   async function update_git(callback)
   {
     process.chdir(__dirname);
-      exec('sudo git pull', (error, stdout, stderr) => {
+      exec('git pull', (error, stdout, stderr) => {
             if (error) {
                 console.error(`Error  ${error.message}`);
                 return;
@@ -42,33 +42,18 @@ const cyan = '\x1b[36m';
   async function isRepoUpToDate() {
     process.chdir(__dirname);
      return new Promise((resolve, reject) => {
-         // Fetch latest changes from the remote
-         exec('git fetch', (fetchError) => {
-             if (fetchError) {
-                 console.error('Error fetching from remote:', fetchError);
-                 reject(fetchError)
-             }
- 
-             // Check the status to see if we're behind or ahead of the remote branch
-             exec('git status -uno', (statusError, stdout) => {
-                 if (statusError) {
-                     console.error('Error checking git status:');
-                     reject(statusError)
-                 }
-                 // Parse the output of 'git status'
-                 if (stdout.includes('Your branch is up to date')) {
-                     console.log('Your repository is up to date.');
-                 } else if (stdout.includes('Your branch is behind')) {
-                     console.log('Your repository is behind the remote. Consider pulling.');
-                     reject(true)
-                 } else if (stdout.includes('Your branch is ahead')) {
-                     console.log('Your repository is .');
-                 } else {
-                     console.log('Your repository status is unclear. Check manually.');
-                 }
-                 resolve(true);
-             });
-         });
+      process.chdir(__dirname);
+      exec('git pull', (error, stdout, stderr) => {
+            if (error) {
+                console.error(`Error  ${error.message}`);
+                reject(true);
+            }
+            if (stderr) {
+                console.error(green,`\r✅ Updated `,reset);
+                reject(true)
+            }
+           resolve(stdout)
+        });
      })
  
  }
