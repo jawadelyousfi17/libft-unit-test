@@ -62,7 +62,7 @@ const cyan = '\x1b[36m';
                      console.log('Your repository is behind the remote. Consider pulling.');
                      reject(true)
                  } else if (stdout.includes('Your branch is ahead')) {
-                     console.log('Your repository is ahead of the remote. Consider pushing.');
+                     console.log('Your repository is .');
                  } else {
                      console.log('Your repository status is unclear. Check manually.');
                  }
