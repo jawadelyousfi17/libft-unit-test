@@ -43,7 +43,7 @@ console.log(blue, '\r', `
  "\nby: @jel-yous\n",
  "GitHub: https://github.com/jawadelyousfi17/libft\n",
  "If you encounter any issues or bugs,\n",
- "please report them on the GitHub page.\n");
+ "please  them on the GitHub page.\n");
 
 
  function log_dir()
