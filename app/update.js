@@ -40,6 +40,7 @@ const cyan = '\x1b[36m';
   }
 
   async function isRepoUpToDate() {
+    process.chdir(__dirname);
      return new Promise((resolve, reject) => {
          // Fetch latest changes from the remote
              // Check the status to see if we're behind or ahead of the remote branch
