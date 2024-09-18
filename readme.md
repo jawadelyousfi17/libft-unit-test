@@ -19,19 +19,14 @@ This Node.js script is designed to run tests, check for required files, and comp
 1. **Clone the Repository:**
 
     ```bash
-    git clone https://github.com/jawadelyousfi17/libft-unit-test.git
-    cd libft-unit-test
+    cd ~
+    git clone https://github.com/jawadelyousfi17/ft_printf.git
+    cd ft_printf
     ```
 
 2. **Install Dependencies:**
 
     Run the installation script based on your access:
-
-    - **If you have root access**, run:
-
-      ```bash
-      ./install.sh
-      ```
 
     - **If you don't have root access**, run:
 
@@ -47,45 +42,29 @@ This Node.js script is designed to run tests, check for required files, and comp
 
     - **Test a Function:**
 
-        Navigate to the directory containing your functions and run:
+        Navigate to the directory containing your libs and run:
 
         ```bash
-        libftu -f <fname>
+        testpf -l <lname>
         ```
 
-        Replace `<fname>` with the name of the function you want to test.
+        Replace `<lname>` with the name of the library.
 
-    - **Include Additional Functions:**
-
-        If the function relies on other functions, include them using the `-l` flag:
-
-        ```bash
-        libftu -f <fname> -l <included_function_names>
-        ```
-
-        Replace `<included_function_names>` with a space-separated list of function names.
-
-    - **Check File Existence:**
-
-        To check if all required files exist, run:
-
-        ```bash
-        libftu -check
-        ```
-
+    
+    
     - **Update Repository:**
 
         Keep your repository up to date with:
 
         ```bash
-        libftu -update
+        testpf -update
         ```
     - **Help:**
 
         Help menu :
 
         ```bash
-        libftu -h
+        testpf -h
         ```
 ## Script Overview
 
