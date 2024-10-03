@@ -1,4 +1,5 @@
 const args = process.argv.slice(2);
+const currentDirectory = process.cwd();
 
 const parseArgs = (args) => {
   const flags = {};
@@ -52,4 +53,25 @@ const flags = getArgs(args);
 const getParams = () => {
   return flags;
 }
-module.exports = { getParams }
+
+// Get Helper functions Name
+function getFunctionsToCheck()
+{
+  const helperFunctionsArgs = flags.l;
+  let helperFunctionsNames = '';
+  const functionsToCheck = [];
+  functionsToCheck.push(flags.f[0] + '.c')
+  if (flags.l) {
+      helperFunctionsArgs.forEach(fn => {
+          helperFunctionsNames += currentDirectory + '/' + fn + '.c '
+      });
+      flags.l.forEach((fn, index) => {
+          flags.l[index] = fn + '.c'
+          functionsToCheck.push(flags.l[index])
+      })
+  }
+  return {helperFunctionsNames, functionsToCheck}
+}
+
+
+module.exports = { getParams , getFunctionsToCheck }

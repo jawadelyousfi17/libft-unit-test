@@ -37,4 +37,17 @@ async function checkFiles() {
     return err;
 }
 
-module.exports = { checkFiles }
+async function checkFilesExist(files) {
+    let err = false;
+    for (const file of files) {
+        const absolutePath = path.resolve(file); // Resolve absolute path
+        const exists = await checkFileExists(absolutePath);
+        if (!exists) {
+            console.error(`${file} ${exists ? 'exists' : 'is MISSING'}`);
+            err = true;
+        }
+    }
+    return err;
+}
+
+module.exports = { checkFiles , checkFilesExist }
