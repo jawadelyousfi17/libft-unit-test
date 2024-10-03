@@ -14,7 +14,7 @@ typedef struct
     char *expected;
 } test_vals;
 
-#define TESTS_NBR 20
+#define TESTS_NBR 22
 
 int main()
 {
@@ -140,6 +140,16 @@ int main()
     tests[19].expected = "";
     tests[19].result = ft_strtrim(tests[19].test_case, tests[19].set);
 
+    tests[20].test_case = "9911991199991991119111911991189191911911919191999191919199911919191";
+    tests[20].set = "91";
+    tests[20].expected = "8";
+    tests[20].result = ft_strtrim(tests[20].test_case, tests[20].set);
+
+    tests[21].test_case = ".   ..This is a little bit tricky!    .";
+    tests[21].set = ". ";
+    tests[21].expected = "This is a little bit tricky!";
+    tests[21].result = ft_strtrim(tests[21].test_case, tests[21].set);
+
     int index = 0;
     int sucess = 1;
     int passed_tests = TESTS_NBR;
@@ -152,7 +162,7 @@ int main()
         }
         else
         {
-            printf(BG_RED "TEST %d FAILED\n", index + 1);
+            printf(BG_RED "TEST %d FAILED" RESET "\n", index + 1);
             printf(RESET "   Test case : \"%s\" , set = \"%s\" \n", tests[index].test_case, tests[index].set);
             printf(TEXT_ORANGE "   Got : \"%s\"\n", tests[index].result);
             printf(TEXT_CYAN "   Expected : \"%s\"\n" RESET, tests[index].expected);
@@ -178,7 +188,7 @@ int main()
     }
     else
     {
-        printf("\n" BG_RED "FAILED ! %d / %d\n"RESET, passed_tests, TESTS_NBR);
+        printf("\n" BG_RED "FAILED ! %d / %d" RESET "\n", passed_tests, TESTS_NBR);
     }
     return 1;
 }
