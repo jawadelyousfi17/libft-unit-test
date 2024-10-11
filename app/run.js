@@ -21,7 +21,15 @@ const functionNames = [
     "ft_itoa",
     "ft_substr",
     "ft_strjoin",
-    "ft_strtrim"
+    "ft_strtrim",
+    "ft_split",
+    "ft_strlen",
+    "ft_isalnum",
+    "ft_isalpha",
+    "ft_isascii",
+    "ft_isdigit",
+    "ft_isprint",
+    "ft_tolower"
 ];
 
 // Function to handle updates
