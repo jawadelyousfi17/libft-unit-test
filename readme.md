@@ -24,26 +24,16 @@ This Node.js script is designed to run tests, check for required files, and comp
     ```
 
 2. **Install Dependencies:**
-
-    Run the installation script based on your access:
-
-    - **If you have root access**, run:
-
-      ```bash
-      ./install.sh
-      ```
-
-    - **If you don't have root access**, run:
-
+   
       ```bash
       ./setup.sh
       ```
 
-3. **Ensure Node.js and npm Are Installed:**
+4. **Ensure Node.js and npm Are Installed:**
 
     This command-line tool uses the Node.js runtime. If Node.js and npm are not installed on your device, please install them first. You can follow the instructions provided here: [Node.js Installation Guide](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm).
 
-4. **Usage:**
+5. **Usage:**
 
     - **Test a Function:**
 
