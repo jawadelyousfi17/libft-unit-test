@@ -4,14 +4,14 @@
 if [[ "$SHELL" == *"bash"* ]]; then
     echo "Using bash"
     # Add alias to .bashrc
-    echo "alias badt='~/libft-unit-test/run_test.sh'" >> ~/.bashrc
+    echo "alias libftu='~/libft-unit-test/run_test.sh'" >> ~/.bashrc
     # Reload .bashrc
     #show message
     source ~/.bashrc
 elif [[ "$SHELL" == *"zsh"* ]]; then
     echo "Using zsh "
     # Add alias to .zshrc
-    echo "alias badt='~/libft-unit-test/run_test.sh'" >> ~/.zshrc
+    echo "alias libftu='~/libft-unit-test/run_test.sh'" >> ~/.zshrc
     # Reload .zshrc
     echo "Setup ended"
     zsh -c "source ~/.zshrc"
