@@ -1,4 +1,4 @@
-#!/bin/bash
+ho #!/bin/bash
 
 # Define colors
 RED='\033[0;31m'
@@ -22,7 +22,7 @@ SCRIPT_DIR="$(dirname "$(realpath "$0")")"
 
 # Construct the full path to your Node.js script
 NODE_SCRIPT="$SCRIPT_DIR/app/run.js"
-
+echo NODE_SCRIPT
 # Execute the Node.js script with any passed arguments
 node "$NODE_SCRIPT" "$@"
 
