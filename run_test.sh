@@ -21,8 +21,7 @@ SCRIPT_DIR="$(dirname "$(realpath "$0")")"
 # fi
 
 # Construct the full path to your Node.js script
-NODE_SCRIPT="$SCRIPT_DIR/app/run.js"
-echo NODE_SCRIPT
+NODE_SCRIPT="app/run.js"
 # Execute the Node.js script with any passed arguments
 node "$NODE_SCRIPT" "$@"
 
