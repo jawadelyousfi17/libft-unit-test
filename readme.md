@@ -19,11 +19,12 @@ This Node.js script is designed to run tests, check for required files, and comp
 1. **Clone the Repository:**
 
     ```bash
+    cd ~
     git clone https://github.com/jawadelyousfi17/libft-unit-test.git
     cd libft-unit-test
     ```
 
-2. **Install Dependencies:**
+2. **Install :**
    
       ```bash
       ./setup.sh
