@@ -15,7 +15,7 @@ int _formate(int x)
 
 typedef struct
 {
-    char test_case;
+    int test_case;
     int result;
     int expected;
 } test_val;
