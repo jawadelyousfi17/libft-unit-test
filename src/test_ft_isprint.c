@@ -42,14 +42,14 @@ int main()
     int passed_tests = TESTS_NBR;
     while (index < TESTS_NBR)
     {
-        if (_formate(tests[index].result)== _formate(tests[index].expected))
+        if (_formate(tests[index].result) == _formate(tests[index].expected))
         {
             //printf("TEST %d ✅\n", index + 1);
         }
         else
         {
             printf("TEST %d ❌\n", index + 1);
-            printf("   Test case : %cn", tests[index].test_case);
+            printf("   Test case : %d\n", tests[index].test_case);
             printf("   Got : \"%d\"\n", tests[index].result);
             printf("   Expected : \"%d\"\n", tests[index].expected);
             sucess = 0;
